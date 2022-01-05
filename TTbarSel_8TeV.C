@@ -5,7 +5,7 @@
 
 void TTbarSel_8TeV(){ //void function with the same name as script or file code
 
-  TFile *file = TFile::Open("Data_8TeV.root");
+  TFile *file = TFile::Open("../Data_8TeV.root");
 
   TTree *tree = (TTree*) file->Get("mini");
   tree->Print();
@@ -158,7 +158,7 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
         n_jets++;
       }
       if (jet_MV1[j] < 0.7892) continue; //cut on 0.7892 MV1 and count the number of b-jets
-      n_bjets++;
+        n_bjets++;
     }
 
     //Fifth cut: At least 4 good jets
@@ -181,16 +181,16 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
     TLorentzVector MeT = TLorentzVector();
 
     //To complete: Lorentz vectors for the lepton and MET. Use SetPtEtaPhiE().
-    Lepton.SetPtEtaPhiE(lep_pt->at(0),lep_eta->at(0),lep_phi->at(0),lep_E->at(0));
-    MeT.SetPtEtaPhiE(0,0,MET_phi,MeT);
+    Lepton.SetPtEtaPhiE(lep_pt[0],lep_eta[0],lep_phi[0],lep_E[0]);
+    MeT.SetPtEtaPhiE(0,0,MET_phi,MET);
 
     //Calculation of the mTW using TLorenzt vectors
-    /*float mTW = sqrt(2*Lepton.Pt()*MeT.Et()*(1-cos(Lepton.DeltaPhi(MeT))));
+    float mTW = sqrt(2*Lepton.Pt()*MeT.E()*(1-cos(Lepton.DeltaPhi(MeT))));
 
     //Eight cut: mTW > 30 GeV
     if (mTW < 30000.) continue;
     cutflow->Fill(8);
-    cut8++;*/
+    cut8++;
 
 
     index.clear();
