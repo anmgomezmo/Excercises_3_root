@@ -83,11 +83,12 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
   int cut7 = 0;
   int cut8 = 0;
 
-  vector <int> index;
+
 
   for (i = 0; i < nentries; i++) {
 
     nbytes = tree->GetEntry(i);
+    vector <int> index;
 
     //First cut: Good vertex
     if (!good_vtx) continue;
@@ -181,7 +182,7 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
     TLorentzVector MeT = TLorentzVector();
 
     //To complete: Lorentz vectors for the lepton and MET. Use SetPtEtaPhiE().
-    Lepton.SetPtEtaPhiE(lep_pt[0],lep_eta[0],lep_phi[0],lep_E[0]);
+    Lepton.SetPtEtaPhiE(lep_pt[index[0]],lep_eta[index[0]],lep_phi[index[0]],lep_E[index[0]]);
     MeT.SetPtEtaPhiE(0,0,MET_phi,MET);
 
     //Calculation of the mTW using TLorenzt vectors
@@ -191,6 +192,7 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
     if (mTW < 30000.) continue;
     cutflow->Fill(8);
     cut8++;
+
 
 
     index.clear();
