@@ -65,7 +65,8 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
 
   //create leading jet pt and all jets histograms
   TH1F *cutflow = new TH1F("Cutflow","Cutflow; Cut; Events",10,0,10);
-  TH1F *hist_njets = new TH1F("Number of jets","n-jets; Jet multiplicity; Events",10,0,10);
+  TFile f("hist_njets_data.root","new");
+  TH1F *hist_njets_data = new TH1F("Number of jets","n-jets; Jet multiplicity; Events",6,4,10);
   //TH1F *aux = new TH1F("Number of good leptons","n-leptons; n-leptons; Events",10,0,10);
 
 
@@ -140,7 +141,7 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
     int n_bjets = 0;
 
     //Number of jets distribution
-    hist_njets->Fill(jet_n);
+    //hist_njets_data->Fill(jet_n);
 
     //Fourth cut: At least 4 jets
     if (jet_n < 4) continue;
@@ -196,8 +197,12 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
 
 
     index.clear();
+    
+    hist_njets_data->Fill(jet_n);
 
   }
+  
+  hist_njets_data->Write();
 
   std::cout << "Done!" << std::endl;
   std::cout << "All events:" << "\t" << nentries << std::endl;
@@ -218,7 +223,7 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
   /*cutflow->Draw();
   canvas->Draw();*/
 
-  hist_njets->Draw();
+  hist_njets_data->Draw();
   canvas->Draw();
 
 }
