@@ -3,10 +3,9 @@
 #include <stdio.h>
 #include <vector>
 
-void TTbarSel_8TeV(){ //void function with the same name as script or file code
+void TTbarSel_8TeV_MC(){ //void function with the same name as script or file code
 
-  TFile *file = TFile::Open("../Data_8TeV.root");
-
+  TFile *file = TFile::Open("../ttbar_8TeV.root");
   TTree *tree = (TTree*) file->Get("mini");
   tree->Print();
 
@@ -140,7 +139,7 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
     int n_bjets = 0;
 
     //Number of jets distribution
-    hist_njets->Fill(jet_n);
+    //hist_njets->Fill(jet_n);
 
     //Fourth cut: At least 4 jets
     if (jet_n < 4) continue;
@@ -196,6 +195,8 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
 
 
     index.clear();
+
+    hist_njets->Fill(jet_n);
 
   }
 
