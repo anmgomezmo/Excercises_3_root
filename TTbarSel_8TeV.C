@@ -65,8 +65,15 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
 
   //create leading jet pt and all jets histograms
   TH1F *cutflow = new TH1F("Cutflow","Cutflow; Cut; Events",10,0,10);
-  TFile f("hist_njets_data.root","new");
-  TH1F *hist_njets_data = new TH1F("Number of jets","n-jets; Jet multiplicity; Events",6,4,10);
+  
+  TFile f("hist_data.root","new");
+  TH1F *hist_nlep_data = new TH1F("Number of leptons","n-leptons; Lepton multiplicity; Events",4,0,4);
+  TH1F *hist_jetn_data = new TH1F("Number of jets","n-jets; Jet multiplicity; Events",10,0,10);
+  TH1F *hist_njets_data = new TH1F("Number of good jets","n-jets; Jet multiplicity; Events",6,4,10);
+  TH1F *hist_nbjets_data = new TH1F("Number of b jets","n-bjets; Jet multiplicity; Events",4,2,6);
+  TH1F *hist_met_data = new TH1F("MET value","MET; MET; Events",20,30000,200000);
+  TH1F *hist_mtw_data = new TH1F("mTW value","mTW; mTW; Events",20,30000,200000);
+  
   //TH1F *aux = new TH1F("Number of good leptons","n-leptons; n-leptons; Events",10,0,10);
 
 
@@ -198,11 +205,24 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
 
     index.clear();
     
-    hist_njets_data->Fill(jet_n);
+    
+    hist_nlep_data->Fill(n_lep);
+    hist_jetn_data->Fill(jet_n);
+    hist_njets_data->Fill(n_jets);
+    hist_nbjets_data->Fill(n_bjets);
+    hist_met_data->Fill(MET);
+    hist_mtw_data->Fill(mTW);
 
   }
   
+  hist_nlep_data->Write();
+  hist_jetn_data->Write();
   hist_njets_data->Write();
+  hist_nbjets_data->Write();
+  hist_met_data->Write();
+  hist_mtw_data->Write();
+  
+  
 
   std::cout << "Done!" << std::endl;
   std::cout << "All events:" << "\t" << nentries << std::endl;
@@ -220,10 +240,10 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
 
 
   //Draw histograms
-  /*cutflow->Draw();
-  canvas->Draw();*/
-
-  hist_njets_data->Draw();
+  cutflow->Draw();
   canvas->Draw();
+
+  /*hist_njets_data->Draw();
+  canvas->Draw();*/
 
 }

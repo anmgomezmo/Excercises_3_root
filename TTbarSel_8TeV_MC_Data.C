@@ -65,7 +65,6 @@ TCanvas *canvas = new TCanvas("Canvas","",800,600);
 
 //create leading jet pt and all jets histograms
 TH1F *cutflow = new TH1F("Cutflow","Cutflow; Cut; Events",10,0,10);
-TFile f("hist_njets_data.root","new");
 TH1F *hist_njets_data = new TH1F("Number of jets","n-jets; Jet multiplicity; Events",10,0,10);
 //TH1F *aux = new TH1F("Number of good leptons","n-leptons; n-leptons; Events",10,0,10);
 
@@ -201,8 +200,6 @@ for (i = 0; i < nentries; i++) {
   hist_njets_data->Fill(jet_n);
 
 }
-
-hist_njets_data->Write();
 
 std::cout << "Done!" << std::endl;
 std::cout << "All events:" << "\t" << nentries << std::endl;
