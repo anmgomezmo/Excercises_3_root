@@ -67,12 +67,23 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
   TH1F *cutflow = new TH1F("Cutflow","Cutflow; Cut; Events",10,0,10);
 
   TFile f("hist_data_cuts.root","new");
-  TH1F *hist_nlep_data = new TH1F("Number of leptons","n-leptons; Lepton multiplicity; Events",4,0,4);
-  TH1F *hist_jetn_data = new TH1F("Number of jets","n-jets; Jet multiplicity; Events",10,0,10);
-  TH1F *hist_njets_data = new TH1F("Number of good jets","n-jets; Jet multiplicity; Events",6,4,10);
-  TH1F *hist_nbjets_data = new TH1F("Number of b jets","n-bjets; Jet multiplicity; Events",4,2,6);
-  TH1F *hist_met_data = new TH1F("MET value","MET; MET; Events",20,30000,200000);
-  TH1F *hist_mtw_data = new TH1F("mTW value","mTW; mTW; Events",20,30000,200000);
+  TH1F *hist_nlep = new TH1F("Number of leptons","n-leptons; Lepton multiplicity; Events",4,0,4);
+  TH1F *hist_lep_pt = new TH1F("Leptons pt","Lepton pt; pt(GeV); Events",100,0,200);
+  TH1F *hist_lep_trackisolation = new TH1F("Leptons track isolation","Lepton track; ptcone/pt; Events",10,0,1);
+  TH1F *hist_lep_calorisolation = new TH1F("Leptons calorimeter isolation","Lepton calorimeter; etcone/pt; Events",10,0,1);
+  TH1F *hist_lep_eta = new TH1F("Leptons eta","Lepton eta; eta; Events",20,-10,10);
+  TH1F *hist_lep_e = new TH1F("Leptons E","Lepton E; E(GeV); Events",100,0,200);
+  TH1F *hist_nele = new TH1F("Number of electrons","Number of electrons; Electron multiplicity; Events",5,0,5);
+  TH1F *hist_nmuon = new TH1F("Number of muons","Number of muons; Muon multiplicity; Events",5,0,5);
+  TH1F *hist_jetn = new TH1F("Number of jets","n-jets; Jet multiplicity; Events",10,0,10);
+  TH1F *hist_njets = new TH1F("Number of good jets","n-jets; Jet multiplicity; Events",6,4,10);
+  TH1F *hist_jet_pt = new TH1F("Jet pt","Jet pt; pt(Gev); Events",100,0,200);
+  TH1F *hist_jet_eta = new TH1F("Jet eta","Jet eta; eta; Events",20,-10,10);
+  TH1F *hist_jet_jvf = new TH1F("Jet jvf","Jet jvf; jvf; Events",20,-10,10);
+  TH1F *hist_jet_mv1 = new TH1F("MV1","MV1; mv1; Events",10,0,2);
+  TH1F *hist_nbjets = new TH1F("Number of b jets","n-bjets; Jet multiplicity; Events",4,2,6);
+  TH1F *hist_met = new TH1F("MET value","MET; MET; Events",20,30000,200000);
+  TH1F *hist_mtw = new TH1F("mTW value","mTW; mTW; Events",20,30000,200000);
 
   //TH1F *aux = new TH1F("Number of good leptons","n-leptons; n-leptons; Events",10,0,10);
 
