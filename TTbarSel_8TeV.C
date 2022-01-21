@@ -66,24 +66,24 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
   //create leading jet pt and all jets histograms
   TH1F *cutflow = new TH1F("Cutflow","Cutflow; Cut; Events",10,0,10);
 
-  TFile f("hist_data_cuts.root","new");
+  TFile f("hist_data.root","new");
   TH1F *hist_nlep = new TH1F("Number of leptons","n-leptons; Lepton multiplicity; Events",4,0,4);
-  TH1F *hist_lep_pt = new TH1F("Leptons pt","Lepton pt; pt(GeV); Events",100,0,200);
-  TH1F *hist_lep_trackisolation = new TH1F("Leptons track isolation","Lepton track; ptcone/pt; Events",10,0,1);
-  TH1F *hist_lep_calorisolation = new TH1F("Leptons calorimeter isolation","Lepton calorimeter; etcone/pt; Events",10,0,1);
+  TH1F *hist_lep_pt = new TH1F("Leptons pt","Lepton pt; pt (GeV); Events",100,0,200);
+  TH1F *hist_lep_trackisolation = new TH1F("Leptons track isolation","Lepton track; ptcone/pt; Events",10,0,0.2);
+  TH1F *hist_lep_calorisolation = new TH1F("Leptons calorimeter isolation","Lepton calorimeter; etcone/pt; Events",10,0,0.2);
   TH1F *hist_lep_eta = new TH1F("Leptons eta","Lepton eta; eta; Events",20,-10,10);
-  TH1F *hist_lep_e = new TH1F("Leptons E","Lepton E; E(GeV); Events",100,0,200);
+  TH1F *hist_lep_e = new TH1F("Leptons E","Lepton E; E (GeV); Events",100,0,200);
   TH1F *hist_nele = new TH1F("Number of electrons","Number of electrons; Electron multiplicity; Events",5,0,5);
   TH1F *hist_nmuon = new TH1F("Number of muons","Number of muons; Muon multiplicity; Events",5,0,5);
   TH1F *hist_jetn = new TH1F("Number of jets","n-jets; Jet multiplicity; Events",10,0,10);
   TH1F *hist_njets = new TH1F("Number of good jets","n-jets; Jet multiplicity; Events",6,4,10);
-  TH1F *hist_jet_pt = new TH1F("Jet pt","Jet pt; pt(Gev); Events",100,0,200);
+  TH1F *hist_jet_pt = new TH1F("Jet pt","Jet pt; pt (GeV); Events",100,0,200);
   TH1F *hist_jet_eta = new TH1F("Jet eta","Jet eta; eta; Events",20,-10,10);
-  TH1F *hist_jet_jvf = new TH1F("Jet jvf","Jet jvf; jvf; Events",20,-10,10);
-  TH1F *hist_jet_mv1 = new TH1F("MV1","MV1; mv1; Events",10,0,2);
+  TH1F *hist_jet_jvf = new TH1F("Jet jvf","Jet jvf; jvf; Events",20,-1,2);
+  TH1F *hist_jet_mv1 = new TH1F("MV1","MV1; mv1; Events",10,0,1);
   TH1F *hist_nbjets = new TH1F("Number of b jets","n-bjets; Jet multiplicity; Events",4,2,6);
-  TH1F *hist_met = new TH1F("MET value","MET; MET; Events",20,30000,200000);
-  TH1F *hist_mtw = new TH1F("mTW value","mTW; mTW; Events",20,30000,200000);
+  TH1F *hist_met = new TH1F("MET value","MET; MET (GeV); Events",20,30,200);
+  TH1F *hist_mtw = new TH1F("mTW value","mTW; mTW (GeV); Events",20,30,200);
 
   //TH1F *aux = new TH1F("Number of good leptons","n-leptons; n-leptons; Events",10,0,10);
 
@@ -159,7 +159,7 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
     int n_bjets = 0;
 
     //Number of jets distribution
-    //hist_njets_data->Fill(jet_n);
+    //hist_jetn->Fill(jet_n);
 
     //Fourth cut: At least 4 jets
     if (jet_n < 4) continue;
@@ -213,25 +213,50 @@ void TTbarSel_8TeV(){ //void function with the same name as script or file code
     cut8++;
 
 
+    // Fill histograms to compare with MC
+
+    hist_nlep->Fill(n_lep);
+    hist_lep_pt->Fill(lep_pt[index[0]]/1000.);
+    hist_lep_trackisolation->Fill(lep_ptcone30[index[0]]/lep_pt[index[0]]);
+    hist_lep_calorisolation->Fill(lep_etcone20[index[0]]/lep_pt[index[0]]);
+    hist_lep_eta->Fill(lep_phi[index[0]]);
+    hist_lep_e->Fill(lep_E[index[0]]/1000.);
+    hist_nele->Fill(n_el);
+    hist_nmuon->Fill(n_mu);
+    hist_jetn->Fill(jet_n);
+    hist_njets->Fill(n_jets);
+    for (unsigned i = 0; i < n_jets; i++) {
+      hist_jet_pt->Fill(jet_pt[i]/1000.);
+      hist_jet_eta->Fill(jet_eta[i]);
+      hist_jet_jvf->Fill(jet_jvf[i]);
+      hist_jet_mv1->Fill(jet_MV1[i]);
+    }
+    hist_nbjets->Fill(n_bjets);
+    hist_met->Fill(MET/1000.);
+    hist_mtw->Fill(mTW/1000.);
+
 
     index.clear();
 
-
-    hist_nlep_data->Fill(n_lep);
-    hist_jetn_data->Fill(jet_n);
-    hist_njets_data->Fill(n_jets);
-    hist_nbjets_data->Fill(n_bjets);
-    hist_met_data->Fill(MET);
-    hist_mtw_data->Fill(mTW);
-
   }
 
-  hist_nlep_data->Write();
-  hist_jetn_data->Write();
-  hist_njets_data->Write();
-  hist_nbjets_data->Write();
-  hist_met_data->Write();
-  hist_mtw_data->Write();
+  hist_nlep->Write();
+  hist_lep_pt->Write();
+  hist_lep_trackisolation->Write();
+  hist_lep_calorisolation->Write();
+  hist_lep_eta->Write();
+  hist_lep_e->Write();
+  hist_nele->Write();
+  hist_nmuon->Write();
+  hist_jetn->Write();
+  hist_njets->Write();
+  hist_jet_pt->Write();
+  hist_jet_eta->Write();
+  hist_jet_jvf->Write();
+  hist_jet_mv1->Write();
+  hist_nbjets->Write();
+  hist_met->Write();
+  hist_mtw->Write();
 
 
 
